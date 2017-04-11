@@ -7,9 +7,9 @@ import org.bukkit.entity.Player;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 
-public final class BukkitMessageBuilder extends MessageBuilder<BukkitMessageBuilder>{
+public final class BukkitMessageBuilder extends AbstractMessageBuilder<BukkitMessageBuilder>{
 
-	public BukkitMessageBuilder(MessageBuilder<?> messageBuilder) {
+	public BukkitMessageBuilder(AbstractMessageBuilder<?> messageBuilder) {
 		super(messageBuilder);
 	}
 	

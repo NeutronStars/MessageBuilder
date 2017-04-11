@@ -6,9 +6,9 @@ import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-public final class BungeeMessageBuilder extends MessageBuilder<BungeeMessageBuilder>{
+public final class BungeeMessageBuilder extends AbstractMessageBuilder<BungeeMessageBuilder>{
 
-	public BungeeMessageBuilder(MessageBuilder<?> messageBuilder) {
+	public BungeeMessageBuilder(AbstractMessageBuilder<?> messageBuilder) {
 		super(messageBuilder);
 	}
 	
