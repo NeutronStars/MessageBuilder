@@ -1,10 +1,6 @@
 package fr.neutronstars.message;
 
-import java.util.Collection;
 import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import com.google.common.collect.Lists;
 
@@ -18,14 +14,14 @@ import net.md_5.bungee.api.chat.TextComponent;
 * @author NeutronStars
 */
 
-public final class MessageBuilder {
+public class MessageBuilder {
 
 	private final List<BaseComponent> baseComponents = Lists.newArrayList();
 	private TextComponent textComponent;
 	
 	public MessageBuilder(MessageBuilder messageBuilder){
 		this.baseComponents.addAll(messageBuilder.baseComponents);
-		this.textComponent = messageBuilder.textComponent;
+		this.textComponent = (TextComponent) messageBuilder.textComponent.duplicate();
 	}
 	
 	public MessageBuilder(String text){
@@ -80,8 +76,7 @@ public final class MessageBuilder {
 	 * @return the class.
 	 */
 	public MessageBuilder setHover(String text){
-		textComponent.setHoverEvent(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(text)}));
-		return this;
+		return this.setHover(new TextComponent(text));
 	}
 	
 	/**
@@ -110,43 +105,25 @@ public final class MessageBuilder {
 	 * @return BaseComponent[]
 	 */
 	public BaseComponent[] build(){
-		BaseComponent[] result = (BaseComponent[])this.baseComponents.toArray(new BaseComponent[this.baseComponents.size() + 1]);
+		BaseComponent[] result = this.baseComponents.toArray(new BaseComponent[this.baseComponents.size() + 1]);
 		result[this.baseComponents.size()] = this.textComponent;
 		return result;
 	}
 	
 	/**
-	 * Send to player
-	 * @param player
+	 * Transform to BukkitMessageBuilder
+	 * return {@link BukkitMessageBuilder}
 	 */
-	public void send(Player player){
-		player.spigot().sendMessage(build());
+	public BukkitMessageBuilder toBukkitMessageBuilder(){
+		return new BukkitMessageBuilder(this);
 	}
 	
 	/**
-	 * Send to a player List.
-	 * @param players
+	 * Transform to BungeeMessageBuilder
+	 * return {@link BungeeMessageBuilder}
 	 */
-	public void send(Collection<? extends Player> players){
-		BaseComponent[] bc = build();
-		players.forEach(player->player.spigot().sendMessage(bc));
-	}
-	
-	/**
-	 * Send to a player List.
-	 * @param players
-	 */
-	public void send(Player... players){
-		BaseComponent[] bc = build();
-		for(Player player : players) player.spigot().sendMessage(bc);
-	}
-	
-	/**
-	 * Send to all players online.
-	 * @param players
-	 */
-	public void sendAll(){
-		send(Bukkit.getOnlinePlayers());
+	public BungeeMessageBuilder toBungeeMessageBuilder(){
+		return new BungeeMessageBuilder(this);
 	}
 	
 	/**
