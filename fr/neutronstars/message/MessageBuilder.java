@@ -14,6 +14,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 * @author NeutronStars
 */
 
+@SuppressWarnings("unchecked")
 public class MessageBuilder<T extends MessageBuilder<T>> {
 
 	private final List<BaseComponent> baseComponents = Lists.newArrayList();
@@ -33,10 +34,10 @@ public class MessageBuilder<T extends MessageBuilder<T>> {
 	 * @param text
 	 * @return the class
 	 */
-	public MessageBuilder<T> next(String text){
+	public T next(String text){
 		baseComponents.add(textComponent);
 		textComponent = new TextComponent(text);
-		return (MessageBuilder<T>)this;
+		return (T)this;
 	}
 	
 	/**
@@ -44,7 +45,7 @@ public class MessageBuilder<T extends MessageBuilder<T>> {
 	 * @param text
 	 * @return the class.
 	 */
-	public MessageBuilder<T> nextln(String text){
+	public T nextln(String text){
 		return this.next("\n"+text);
 	}
 	
@@ -54,9 +55,9 @@ public class MessageBuilder<T extends MessageBuilder<T>> {
 	 * @param value
 	 * @return the class.
 	 */
-	public MessageBuilder<T> click(Action action, String value){
+	public T click(Action action, String value){
 		textComponent.setClickEvent(new ClickEvent(action, value));
-		return (MessageBuilder<T>) this;
+		return (T) this;
 	}
 	
 	/**
@@ -64,10 +65,10 @@ public class MessageBuilder<T extends MessageBuilder<T>> {
 	 * @param index
 	 * @return the class.
 	 */
-	public MessageBuilder<T> click(int index){
+	public T click(int index){
 		if(baseComponents.size() > index && index > -1)
 		textComponent.setClickEvent(baseComponents.get(index).getClickEvent());
-		return (MessageBuilder<T>) this;
+		return (T) this;
 	}
 	
 	/**
@@ -75,7 +76,7 @@ public class MessageBuilder<T extends MessageBuilder<T>> {
 	 * @param text
 	 * @return the class.
 	 */
-	public MessageBuilder<T> setHover(String text){
+	public T setHover(String text){
 		return this.setHover(new TextComponent(text));
 	}
 	
@@ -84,9 +85,9 @@ public class MessageBuilder<T extends MessageBuilder<T>> {
 	 * @param text
 	 * @return the class.
 	 */
-	public MessageBuilder<T> setHover(TextComponent text){
+	public T setHover(TextComponent text){
 		textComponent.setHoverEvent(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{text}));
-		return (MessageBuilder<T>) this;
+		return (T) this;
 	}
 	
 	/**
@@ -94,10 +95,10 @@ public class MessageBuilder<T extends MessageBuilder<T>> {
 	 * @param index
 	 * @return the class.
 	 */
-	public MessageBuilder<T> setHover(int index){
+	public T setHover(int index){
 		if(baseComponents.size() > index && index > -1)
 			textComponent.setHoverEvent(baseComponents.get(index).getHoverEvent());
-		return (MessageBuilder<T>) this;
+		return (T)this;
 	}
 	
 	/**
