@@ -14,12 +14,12 @@ import net.md_5.bungee.api.chat.TextComponent;
 * @author NeutronStars
 */
 
-public class MessageBuilder {
+public class MessageBuilder<T extends MessageBuilder<T>> {
 
 	private final List<BaseComponent> baseComponents = Lists.newArrayList();
 	private TextComponent textComponent;
 	
-	public MessageBuilder(MessageBuilder messageBuilder){
+	public MessageBuilder(MessageBuilder<?> messageBuilder){
 		this.baseComponents.addAll(messageBuilder.baseComponents);
 		this.textComponent = (TextComponent) messageBuilder.textComponent.duplicate();
 	}
@@ -33,10 +33,10 @@ public class MessageBuilder {
 	 * @param text
 	 * @return the class
 	 */
-	public MessageBuilder next(String text){
+	public MessageBuilder<T> next(String text){
 		baseComponents.add(textComponent);
 		textComponent = new TextComponent(text);
-		return this;
+		return (MessageBuilder<T>)this;
 	}
 	
 	/**
@@ -44,8 +44,8 @@ public class MessageBuilder {
 	 * @param text
 	 * @return the class.
 	 */
-	public MessageBuilder nextln(String text){
-		return this.next("\n"+text);
+	public MessageBuilder<T> nextln(String text){
+		return (MessageBuilder<T>) this.next("\n"+text);
 	}
 	
 	/**
@@ -54,9 +54,9 @@ public class MessageBuilder {
 	 * @param value
 	 * @return the class.
 	 */
-	public MessageBuilder click(Action action, String value){
+	public MessageBuilder<T> click(Action action, String value){
 		textComponent.setClickEvent(new ClickEvent(action, value));
-		return this;
+		return (MessageBuilder<T>) this;
 	}
 	
 	/**
@@ -64,10 +64,10 @@ public class MessageBuilder {
 	 * @param index
 	 * @return the class.
 	 */
-	public MessageBuilder click(int index){
+	public MessageBuilder<T> click(int index){
 		if(baseComponents.size() > index && index > -1)
 		textComponent.setClickEvent(baseComponents.get(index).getClickEvent());
-		return this;
+		return (MessageBuilder<T>) this;
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class MessageBuilder {
 	 * @param text
 	 * @return the class.
 	 */
-	public MessageBuilder setHover(String text){
+	public MessageBuilder<T> setHover(String text){
 		return this.setHover(new TextComponent(text));
 	}
 	
@@ -84,9 +84,9 @@ public class MessageBuilder {
 	 * @param text
 	 * @return the class.
 	 */
-	public MessageBuilder setHover(TextComponent text){
+	public MessageBuilder<T> setHover(TextComponent text){
 		textComponent.setHoverEvent(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{text}));
-		return this;
+		return (MessageBuilder<T>) this;
 	}
 	
 	/**
@@ -94,10 +94,10 @@ public class MessageBuilder {
 	 * @param index
 	 * @return the class.
 	 */
-	public MessageBuilder setHover(int index){
+	public MessageBuilder<T> setHover(int index){
 		if(baseComponents.size() > index && index > -1)
 			textComponent.setHoverEvent(baseComponents.get(index).getHoverEvent());
-		return this;
+		return (MessageBuilder<T>) this;
 	}
 	
 	/**
@@ -130,7 +130,7 @@ public class MessageBuilder {
 	 * Create a new instance of the class.
 	 * @return this
 	 */
-	public MessageBuilder clone(){
-		return new MessageBuilder(this);
+	public MessageBuilder<T> clone(){
+		return new MessageBuilder<T>(this);
 	}
 }
