@@ -45,7 +45,7 @@ public class MessageBuilder<T extends MessageBuilder<T>> {
 	 * @return the class.
 	 */
 	public MessageBuilder<T> nextln(String text){
-		return (MessageBuilder<T>) this.next("\n"+text);
+		return this.next("\n"+text);
 	}
 	
 	/**
