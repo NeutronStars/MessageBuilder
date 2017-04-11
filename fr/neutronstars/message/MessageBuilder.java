@@ -66,6 +66,17 @@ public final class MessageBuilder {
 	}
 	
 	/**
+	 * Add a event click to the text. (URL, command, suggest command, file and change page in the book.)
+	 * @param index
+	 * @return the class.
+	 */
+	public MessageBuilder click(int index){
+		if(baseComponents.size() > index && index > -1)
+		textComponent.setClickEvent(baseComponents.get(index).getClickEvent());
+		return this;
+	}
+	
+	/**
 	 * Add a text above the text.
 	 * @param text
 	 * @return the class.
@@ -86,13 +97,24 @@ public final class MessageBuilder {
 	}
 	
 	/**
+	 * Add a text above the text.
+	 * @param index
+	 * @return the class.
+	 */
+	public MessageBuilder setHover(int index){
+		if(baseComponents.size() > index && index > -1)
+			textComponent.setHoverEvent(baseComponents.get(index).getHoverEvent());
+		return this;
+	}
+	
+	/**
 	 * Built to prepare to send it to the player.
 	 * @return BaseComponent[]
 	 */
 	public BaseComponent[] build(){
 		BaseComponent[] result = (BaseComponent[])this.baseComponents.toArray(new BaseComponent[this.baseComponents.size() + 1]);
-       result[this.baseComponents.size()] = this.textComponent;
-       return result;
+		result[this.baseComponents.size()] = this.textComponent;
+		return result;
 	}
 	
 	/**
