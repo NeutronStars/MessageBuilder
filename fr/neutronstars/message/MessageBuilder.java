@@ -49,9 +49,7 @@ public final class MessageBuilder {
 	 * @return the class.
 	 */
 	public MessageBuilder nextln(String text){
-		baseComponents.add(textComponent);
-		textComponent = new TextComponent("\n"+text);
-		return this;
+		return this.next("\n"+text);
 	}
 	
 	/**
