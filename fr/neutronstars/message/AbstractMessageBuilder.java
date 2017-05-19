@@ -35,7 +35,7 @@ abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>>{
 	 * @param text
 	 * @return the class
 	 */
-	public T next(String text){
+	public final T next(String text){
 		baseComponents.add(textComponent);
 		textComponent = new TextComponent(text);
 		return (T)this;
@@ -46,7 +46,7 @@ abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>>{
 	 * @param text
 	 * @return the class.
 	 */
-	public T nextln(String text){
+	public final T nextln(String text){
 		return this.next("\n"+text);
 	}
 	
@@ -56,7 +56,7 @@ abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>>{
 	 * @param value
 	 * @return the class.
 	 */
-	public T click(Action action, String value){
+	public final T click(Action action, String value){
 		textComponent.setClickEvent(new ClickEvent(action, value));
 		return (T) this;
 	}
@@ -66,7 +66,7 @@ abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>>{
 	 * @param index
 	 * @return the class.
 	 */
-	public T click(int index){
+	public final T click(int index){
 		if(baseComponents.size() > index && index > -1)
 		textComponent.setClickEvent(baseComponents.get(index).getClickEvent());
 		return (T) this;
@@ -77,7 +77,7 @@ abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>>{
 	 * @param text
 	 * @return the class.
 	 */
-	public T setHover(String text){
+	public final T setHover(String text){
 		return this.setHover(new TextComponent(text));
 	}
 	
@@ -86,7 +86,7 @@ abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>>{
 	 * @param text
 	 * @return the class.
 	 */
-	public T setHover(TextComponent text){
+	public final T setHover(TextComponent text){
 		textComponent.setHoverEvent(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{text}));
 		return (T) this;
 	}
@@ -96,7 +96,7 @@ abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>>{
 	 * @param index
 	 * @return the class.
 	 */
-	public T setHover(int index){
+	public final T setHover(int index){
 		if(baseComponents.size() > index && index > -1)
 			textComponent.setHoverEvent(baseComponents.get(index).getHoverEvent());
 		return (T)this;
@@ -106,7 +106,7 @@ abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>>{
 	 * Built to prepare to send it to the player.
 	 * @return BaseComponent[]
 	 */
-	public BaseComponent[] build(){
+	public final BaseComponent[] build(){
 		BaseComponent[] result = this.baseComponents.toArray(new BaseComponent[this.baseComponents.size() + 1]);
 		result[this.baseComponents.size()] = this.textComponent;
 		return result;
@@ -116,7 +116,7 @@ abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>>{
 	 * Transform to BukkitMessageBuilder
 	 * return {@link BukkitMessageBuilder}
 	 */
-	public BukkitMessageBuilder toBukkitMessageBuilder(){
+	public final BukkitMessageBuilder toBukkitMessageBuilder(){
 		return new BukkitMessageBuilder(this);
 	}
 	
@@ -124,7 +124,7 @@ abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>>{
 	 * Transform to BungeeMessageBuilder
 	 * return {@link BungeeMessageBuilder}
 	 */
-	public BungeeMessageBuilder toBungeeMessageBuilder(){
+	public final BungeeMessageBuilder toBungeeMessageBuilder(){
 		return new BungeeMessageBuilder(this);
 	}
 	
